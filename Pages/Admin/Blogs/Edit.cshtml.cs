@@ -2,6 +2,7 @@ using Bloggie.Data;
 using Bloggie.Migrations;
 using Bloggie.Models.Domain;
 using Bloggie.Models.ViewModels;
+using Bloggie.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,14 +10,14 @@ namespace Bloggie.Pages.Admin.Blogs
 {
     public class EditModel : PageModel
     {
-        private readonly BloggieDbContext _context;
+        private readonly IBlogPostRepository _context;
 
         [BindProperty]
         public BlogPost BlogPost { get; set; }
 
         //public AddBlogPost EditBlogPost;
 
-        public EditModel(BloggieDbContext context)
+        public EditModel(IBlogPostRepository context)
         {
             _context = context;
         }
@@ -24,36 +25,21 @@ namespace Bloggie.Pages.Admin.Blogs
         
         public async Task OnGet(Guid id)
         {
-            BlogPost =await  _context.BlogPosts.FindAsync(id);
+            BlogPost = await _context.GetAsync(id);
         }
 
         public async Task<IActionResult> OnPostEdit() 
         {
-            var existingBlogPost = _context.BlogPosts.Find(BlogPost.Id);
-            if (existingBlogPost != null)
-            {
-                existingBlogPost.Heading = BlogPost.Heading;
-                existingBlogPost.Content = BlogPost.Content;
-                existingBlogPost.PageTitle = BlogPost.PageTitle;
-                existingBlogPost.ShortDescription = BlogPost.ShortDescription;
-                existingBlogPost.FeatureImageUrl = BlogPost.FeatureImageUrl;
-                existingBlogPost.PublishedDate = BlogPost.PublishedDate;
-                existingBlogPost.Author = BlogPost.Author;
-                existingBlogPost.Visible = BlogPost.Visible;
-                existingBlogPost.UrlHandle = BlogPost.UrlHandle;
-            }
-            await _context.SaveChangesAsync();
+            await _context.UpdateAsync(BlogPost);
             return RedirectToPage("/Admin/Blogs/Lists");
         }
 
         public async Task<IActionResult>  OnPostDelete()
         {
-            var existingBlog = await _context.BlogPosts.FindAsync(BlogPost.Id);
-            if (existingBlog != null)
+            var deleted=await _context.DeleteAsync(BlogPost.Id);
+            if (deleted)
             {
-                _context.BlogPosts.Remove(existingBlog);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/Admin/Blogs/lists");
+                return RedirectToPage("/Admin/Blogs/Lists");
             }
             return Page();
            
