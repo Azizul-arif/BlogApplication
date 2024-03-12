@@ -1,0 +1,50 @@
+﻿@page
+@model Bloggie.Pages.Admin.Blogs.ListsModel
+@{
+}
+
+<div class="container mt-5">
+
+</div>
+
+@if (Model.BlogPosts != null && Model.BlogPosts.Any())
+{
+    <div class="cntainer">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Published Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var blog in Model.BlogPosts)
+                {
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>@blog.Id</td>
+                        <td>@blog.Heading</td>
+                        <td>@blog.PublishedDate</td>
+                        <td><a class="btn btn-primary" href="/Admin/Blogs/Edit/@blog.Id">Edit</a></td>
+                        <td><a class="btn btn-danger" href="/Admin/Blogs/Edit/@blog.Id">Delete</a></td>
+
+
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+
+    </div>
+}
+
+else
+{
+    <div class="container">
+        <h1>No BlogLists Available</h1>
+
+    </div>
+}

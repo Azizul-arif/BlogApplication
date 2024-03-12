@@ -1,0 +1,85 @@
+﻿@page "{id:Guid}"
+@model Bloggie.Pages.Admin.Blogs.EditModel
+@{
+}
+
+<div class="container mt-5">
+</div>
+
+@if (Model.BlogPost != null)
+{
+    <div>
+        <form method="post">
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="Id" class="form-label">Id</label>
+                    <input type="Id" class="form-control" id="Id" asp-for="BlogPost.Id" readonly>
+                </div>
+                <div class="col-6">
+                    <label for="heading" class="form-label">Heading</label>
+                    <input type="text" class="form-control" id="heading" asp-for="BlogPost.Heading">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="pageTitle" class="form-label">Page Title</label>
+                    <input type="text" class="form-control" id="pageTitle" asp-for="BlogPost.PageTitle">
+                </div>
+                <div class="col-6">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea class="form-control" id="content" rows="3" asp-for="BlogPost.Content"></textarea>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="shortDescription" class="form-label">Short Description</label>
+                    <input type="text" class="form-control" id="shortDescription" asp-for="BlogPost.ShortDescription">
+                </div>
+                <div class="col-6">
+                    <label for="featureImageUrl" class="form-label">Feature Image URL</label>
+                    <input type="text" class="form-control" id="featureImageUrl" asp-for="BlogPost.FeatureImageUrl">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="urlHandle" class="form-label">URL Handle</label>
+                    <input type="text" class="form-control" id="urlHandle" asp-for="BlogPost.UrlHandle">
+                </div>
+                <div class="col-6">
+                    <label for="publishedDate" class="form-label">Published Date</label>
+                    <input type="date" class="form-control" id="publishedDate" asp-for="BlogPost.PublishedDate">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="author" class="form-label">Author</label>
+                    <input type="text" class="form-control" id="author" asp-for="BlogPost.Author">
+                </div>
+                <div class="col-6">
+                    <label for="visible" class="form-label">Visible</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="visible" asp-for="BlogPost.Visible">
+                        <label class="form-check-label" for="visible">Check if visible</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit" asp-page-handler="Edit">Update</button>
+            <button class="btn btn-danger" type="submit" asp-page-handler="Delete">Delete</button>
+        </form>
+    </div>
+}
+
+else
+{
+ <div class="container">
+     <h1>Blog Post Not Found</h1>
+
+ </div>   
+}
+
+
